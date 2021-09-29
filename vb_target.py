@@ -139,6 +139,10 @@ def get_box_features(model, features, proposals):
     box_features = model.roi_heads.box_head.flatten(box_features)
     box_features = model.roi_heads.box_head.fc1(box_features)
     box_features = model.roi_heads.box_head.fc_relu1(box_features)
+    if box_features.shape[0] != features['p2'].shape[0]*1000: # Cause for error
+        diff = features['p2'].shape[0]*1000 - box_features.shape[0]
+        extra_array = torch.zeros(diff, 1024)
+        box_features = torch.cat((box_features, extra_array), 0)
     box_features = model.roi_heads.box_head.fc2(box_features)
 
     box_features = box_features.reshape(features['p2'].shape[0], 1000, 1024) # depends on your config and batch size
@@ -186,11 +190,20 @@ def select_boxes(cfg, output_boxes, scores):
     test_score_thresh = cfg.MODEL.ROI_HEADS.SCORE_THRESH_TEST
     test_nms_thresh = cfg.MODEL.ROI_HEADS.NMS_THRESH_TEST
     cls_prob = scores.detach()
-    cls_boxes = output_boxes.tensor.detach().reshape(1000,80,4)
+    out_box_tensor = output_boxes.tensor.detach()
+    if out_box_tensor.shape[0] != 80000: # Source for error
+        diff = 80000 - output_boxes.tensor.detach().shape[0]
+        extra_array = torch.zeros(diff, 4)
+        out_box_tensor = torch.cat((out_box_tensor, extra_array), 0)
+    cls_boxes = out_box_tensor.reshape(1000,80,4)
     max_conf = torch.zeros((cls_boxes.shape[0]))
     for cls_ind in range(0, cls_prob.shape[1]-1):
         cls_scores = cls_prob[:, cls_ind+1]
+        if cls_scores.shape[0] != 1000:
+            cls_scores = torch.cat((cls_scores, torch.zeros(1000-cls_scores.shape[0])), 0)
         det_boxes = cls_boxes[:,cls_ind,:]
+        if det_boxes.shape[0] != 1000:
+            det_boxes = torch.cat((det_boxes, torch.zeros(1000-det_boxes.shape[0])), 0)
         keep = np.array(nms(det_boxes.cpu(), cls_scores.cpu(), test_nms_thresh))
         max_conf[keep] = torch.where(cls_scores.cpu()[keep] > max_conf.cpu()[keep], cls_scores.cpu()[keep], max_conf.cpu()[keep])
     keep_boxes = torch.where(max_conf >= test_score_thresh)[0]
@@ -211,15 +224,15 @@ def get_visual_embeds(box_features, keep_boxes):
     return box_features[keep_boxes.copy()]
 
 tokenizer = BertTokenizer.from_pretrained('bert-base-uncased')
+trans_model = VisualBertModel.from_pretrained('uclanlp/visualbert-nlvr2-coco-pre').to(device)
 pool_layer = nn.MaxPool2d((200, 1))
 
 #TODO: Batch Input Processing for VisualBERT
 choice = 1 # 0 for source and 1 for target
-output_array = []
-for i in range(0, len(img_cv2_target), 32):
+for i in range(11744, len(img_cv2_target), 32):
     print(i)
     start_range = i
-    end_range = i +32
+    end_range = i+32
     if i+32>= len(img_cv2_target):
         end_range = len(img_cv2_target)
     source_images, source_batched_inputs = prepare_image_inputs(cfg, img_cv2_target[start_range:end_range])
@@ -246,16 +259,17 @@ for i in range(0, len(img_cv2_target), 32):
     visual_attention_mask = torch.ones(visual_embeds.shape[:-1], dtype=torch.long).to(device)
     visual_token_type_ids = torch.ones(visual_embeds.shape[:-1], dtype=torch.long).to(device)
     # model = VisualBertForPreTraining.from_pretrained('uclanlp/visualbert-nlvr2-coco-pre').to(device) # this checkpoint has 1024 dimensional visual embeddings projection
-    trans_model = VisualBertModel.from_pretrained('uclanlp/visualbert-nlvr2-coco-pre').to(device)
     outputs = trans_model(input_ids=input_ids.to(device), attention_mask=attention_mask.to(device), token_type_ids=token_type_ids.to(device), visual_embeds=visual_embeds.to(device), visual_attention_mask=visual_attention_mask.to(device), visual_token_type_ids=visual_token_type_ids.to(device))
     out_pool = pool_layer(outputs['last_hidden_state']).squeeze(1).cpu().detach().numpy()
-    output_array.append(out_pool)
-
-output_array = np.array(output_array)
-new_shape = output_array.shape[0]*output_array.shape[1], output_array.shape[2]
-output_array = output_array.reshape(new_shape)
-print(output_array.shape)
-
-np.save('../data/source_mm_vbert.npy', output_array)
+    if i == 0:
+        output_array = np.array(out_pool)
+        print(output_array.shape)
+        np.save('../data/target_mm_vbert.npy', output_array)
+    else:
+        pre_array = np.load('../data/target_mm_vbert.npy')
+        output_array = np.array(out_pool)
+        output_array = np.concatenate((pre_array, output_array), axis=0)
+        print(output_array.shape)
+        np.save('../data/target_mm_vbert.npy', output_array)
 
 
