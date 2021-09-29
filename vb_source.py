@@ -223,12 +223,13 @@ def get_visual_embeds(box_features, keep_boxes):
     return box_features[keep_boxes.copy()]
 
 tokenizer = BertTokenizer.from_pretrained('bert-base-uncased')
-trans_model = VisualBertModel.from_pretrained('uclanlp/visualbert-nlvr2-coco-pre').to(device)
+trans_model = VisualBertForPreTraining.from_pretrained('uclanlp/visualbert-nlvr2-coco-pre').to(device) # this checkpoint has 1024 dimensional visual embeddings projection
+# trans_model = VisualBertModel.from_pretrained('uclanlp/visualbert-nlvr2-coco-pre').to(device)
 pool_layer = nn.MaxPool2d((200, 1))
 
 #TODO: Batch Input Processing for VisualBERT
 choice = 0 # 0 for source and 1 for target
-for i in range(11744, len(img_cv2_source), 32):
+for i in range(0, len(img_cv2_source), 32):
     print(i)
     start_range = i
     end_range = i +32
@@ -257,9 +258,9 @@ for i in range(11744, len(img_cv2_source), 32):
     visual_embeds = torch.stack(visual_embeds).to(device)
     visual_attention_mask = torch.ones(visual_embeds.shape[:-1], dtype=torch.long).to(device)
     visual_token_type_ids = torch.ones(visual_embeds.shape[:-1], dtype=torch.long).to(device)
-    # model = VisualBertForPreTraining.from_pretrained('uclanlp/visualbert-nlvr2-coco-pre').to(device) # this checkpoint has 1024 dimensional visual embeddings projection
-    outputs = trans_model(input_ids=input_ids.to(device), attention_mask=attention_mask.to(device), token_type_ids=token_type_ids.to(device), visual_embeds=visual_embeds.to(device), visual_attention_mask=visual_attention_mask.to(device), visual_token_type_ids=visual_token_type_ids.to(device))
-    out_pool = pool_layer(outputs['last_hidden_state']).squeeze(1).cpu().detach().numpy()
+    outputs = trans_model(input_ids=input_ids.to(device), attention_mask=attention_mask.to(device), token_type_ids=token_type_ids.to(device), visual_embeds=visual_embeds.to(device), visual_attention_mask=visual_attention_mask.to(device), visual_token_type_ids=visual_token_type_ids.to(device), output_hidden_states = True)
+    out_pool = outputs['hidden_states'][0][:,0].cpu().detach().numpy()
+    # out_pool = pool_layer(outputs['last_hidden_state']).squeeze(1).cpu().detach().numpy()
     if i == 0:
         output_array = np.array(out_pool)
         # new_shape = output_array.shape[0]*output_array.shape[1], output_array.shape[2]
