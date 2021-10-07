@@ -228,7 +228,7 @@ trans_model = VisualBertModel.from_pretrained('uclanlp/visualbert-nlvr2-coco-pre
 pool_layer = nn.MaxPool2d((200, 1))
 
 #TODO: Batch Input Processing for VisualBERT
-choice = 0 # 0 for source and 1 for target
+choice = 1 # 0 for target and 1 for source
 for i in range(0, len(img_cv2_source), 32):
     print(i)
     start_range = i
