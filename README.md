@@ -27,3 +27,43 @@ ReCovery.csv file in source folder is uploaded in two subparts (ReCovery_1.csv a
 TICNN.csv file in source folder is uploaded in seven subparts (TICNN_1.csv, TICNN_2.csv and so on).
 
 ## Evaluation
+
+### Extract Features
+
+1. ResNet+BERT
+
+```
+python build_multimodal_rbert.py
+```
+
+2. Visual BERT
+
+```
+python vb_source.py
+```
+```
+python vb_target.py
+```
+
+### Baselines
+
+Run the baselines.ipynb python notebook.
+
+### SAFE Model
+
+We use [SAFE](https://github.com/Jindi0/SAFE) as one of our baselines. The code for running on our data is present in the Comparison_SOTA folder.
+
+
+### Contrastive Learning based Novelty Model
+
+Run the contrastive_ce.ipynb python notebook.
+
+### Emotion Representations
+
+1. Emotion Dataset extraction - Run Emotion/extract_mm_emotion.ipynb
+
+2. Emotion Level Pre-Training and Emotion Representations - Run Emotion/finetune_rf.ipynb
+
+### Proposed Model
+
+Run the nv_em_ce.ipynb python notebook. 
