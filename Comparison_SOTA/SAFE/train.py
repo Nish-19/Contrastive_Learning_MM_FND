@@ -136,10 +136,10 @@ def main(_):
     print('===============================================')
     print('load vectors and labels ... ')
 
-    x_head = np.load('/sda/rina_1921cs13/Nischal/NovFake/sota_comp/sent_data/head_arr.npy')
-    x_body = np.load('/sda/rina_1921cs13/Nischal/NovFake/sota_comp/sent_data/body_arr.npy')
-    x_image = np.load('/sda/rina_1921cs13/Nischal/NovFake/sota_comp/sent_data/img_arr.npy')
-    y = np.load('/sda/rina_1921cs13/Nischal/NovFake/data/labels.npy')
+    x_head = np.load('./head_arr.npy')
+    x_body = np.load('./body_arr.npy')
+    x_image = np.load('./img_arr.npy')
+    y = np.load('./data/labels.npy')
     y_cat = to_categorical(y, num_classes=2)
 
     print('split training set and test set ... ')

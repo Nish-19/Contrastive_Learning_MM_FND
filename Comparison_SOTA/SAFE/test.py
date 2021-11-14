@@ -126,10 +126,10 @@ if __name__ == '__main__':
     print('===============================================')
     print('load vectors and labels ... ')
 
-    x_head = np.load('/sda/rina_1921cs13/Nischal/NovFake/sota_comp/sent_data/head_arr.npy')
-    x_body = np.load('/sda/rina_1921cs13/Nischal/NovFake/sota_comp/sent_data/body_arr.npy')
-    x_image = np.load('/sda/rina_1921cs13/Nischal/NovFake/sota_comp/sent_data/img_arr.npy')
-    y = np.load('/sda/rina_1921cs13/Nischal/NovFake/data/labels.npy')
+    x_head = np.load('./head_arr.npy')
+    x_body = np.load('./body_arr.npy')
+    x_image = np.load('./img_arr.npy')
+    y = np.load('./data/labels.npy')
     y_cat = to_categorical(y, num_classes=2)
 
     # outdir = '~/pf_embedding/'
@@ -145,7 +145,7 @@ if __name__ == '__main__':
 
     # key_train, key_test, y_train, y_test = train_test_split(key_list, y, test_size=0.2, random_state=4)
 
-    modelfolder = '/sda/rina_1921cs13/Nischal/NovFake/sota_comp/SAFE/ckp-pre-e-r-1-0_ds_case/iteration'
+    modelfolder = './ckp-pre-e-r-1-0_ds_case/iteration'
 
     print('===============================================')
     print('test......')
@@ -173,7 +173,7 @@ if __name__ == '__main__':
             sheet2.write(i + 1, 2, "fake")
         else:
             sheet2.write(i + 1, 2, "real")
-    pred_dir = '/sda/rina_1921cs13/Nischal/NovFake/sota_comp/SAFE/performance/'
+    pred_dir = './performance/'
     with open(os.path.join(pred_dir, 'results.txt'), 'w') as infile:
         print('Accuracy '+str(acc), file=infile)
         print('Precision '+str(pre), file=infile)
