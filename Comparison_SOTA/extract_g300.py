@@ -6,7 +6,7 @@ import pandas as pd
 # Loading the pre-trained Glove embeddings
 print('Extracting embeddings')
 embeddings_dict = {}
-with open("/sda/rina_1921cs13/Word_Embedding/glove/glove.840B.300d.txt", 'r', encoding="utf-8") as f:
+with open("./glove.840B.300d.txt", 'r', encoding="utf-8") as f:
     for line in f:
         values = line.split()
         word = values[0]
@@ -25,7 +25,7 @@ source_text_arr = text_data[:,1]
 print(target_text_arr.shape)
 print(source_text_arr.shape)
 # Loading image2sen data
-image2sen = pd.read_csv('/sda/rina_1921cs13/Nischal/NovFake/sota_comp/Show_and_Tell/test/results/our_captions.csv')['caption'].to_list()
+image2sen = pd.read_csv('./Show_and_Tell/test/results/our_captions.csv')['caption'].to_list()
 print(len(image2sen))
 
 #TODO: Get sentence embeddings

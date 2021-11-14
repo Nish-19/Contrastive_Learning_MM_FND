@@ -26,7 +26,7 @@ tf.flags.DEFINE_boolean('load', False,
                         'Turn on to load a pretrained model from either \
                         the latest checkpoint or a specified file')
 
-tf.flags.DEFINE_string('model_file', '/sda/rina_1921cs13/Nischal/NovFake/sota_comp/Show_and_Tell/models/finalmodel.npy',
+tf.flags.DEFINE_string('model_file', './Show_and_Tell/models/finalmodel.npy',
                        'If sepcified, load a pretrained model from this file')
 
 tf.flags.DEFINE_boolean('load_cnn', False,

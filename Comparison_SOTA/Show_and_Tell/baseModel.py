@@ -121,16 +121,16 @@ class BaseModel(object):
         """ Test the model using any given images. """
         print("Testing the model ...")
         config = self.config
-        config.test_result_dir = '/sda/rina_1921cs13/Nischal/NovFake/sota_comp/Show_and_Tell/test/results/'
+        config.test_result_dir = './Show_and_Tell/test/results/'
         if not os.path.exists(config.test_result_dir):
-            config.test_result_dir = '/sda/rina_1921cs13/Nischal/NovFake/sota_comp/Show_and_Tell/test/results/'
+            config.test_result_dir = './Show_and_Tell/test/results/'
             os.mkdir(config.test_result_dir)
 
         captions = []
         scores = []
 
         # NOTE: Our data
-        img_data = np.load("/sda/rina_1921cs13/Nischal/NovFake/data/image_array.npy")
+        img_data = np.load("./data/image_array.npy")
         img_data_target = img_data[:,0,:,:]
 
         #TODO: Generate Captions on own data
@@ -171,7 +171,7 @@ class BaseModel(object):
         ##Save the captions to a file
         results = pd.DataFrame({'caption':captions,
                                 'prob':scores})
-        results.to_csv('/sda/rina_1921cs13/Nischal/NovFake/sota_comp/Show_and_Tell/test/results/our_captions.csv')
+        results.to_csv('./Show_and_Tell/test/results/our_captions.csv')
         print("Testing complete.")
 
         # # Generate the captions for the images
@@ -207,7 +207,7 @@ class BaseModel(object):
         # results = pd.DataFrame({'image_files':test_data.image_files,
         #                         'caption':captions,
         #                         'prob':scores})
-        # results.to_csv('/sda/rina_1921cs13/Nischal/NovFake/sota_comp/Show_and_Tell/test/results/captions.csv')
+        # results.to_csv('./Show_and_Tell/test/results/captions.csv')
         # print("Testing complete.")
 
     def save(self):

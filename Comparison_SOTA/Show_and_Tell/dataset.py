@@ -162,7 +162,7 @@ def prepare_eval_data(config):
 
 def prepare_test_data(config):
     """ Prepare the data for testing the model. """
-    files = os.listdir("/sda/rina_1921cs13/Nischal/NovFake/sota_comp/Show_and_Tell/test/images")
+    files = os.listdir("./Show_and_Tell/test/images")
     image_files = [os.path.join(config.test_image_dir, f) for f in files
         if f.lower().endswith('.jpg') or f.lower().endswith('.jpeg')]
     image_ids = list(range(len(image_files)))
