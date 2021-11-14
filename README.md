@@ -47,7 +47,7 @@ python vb_target.py
 
 ### Baselines
 
-Run the baselines.ipynb python notebook.
+Run the ```baselines.ipynb``` python notebook.
 
 ### SAFE Model
 
@@ -56,14 +56,14 @@ We use [SAFE](https://github.com/Jindi0/SAFE) as one of our baselines. The code 
 
 ### Contrastive Learning based Novelty Model
 
-Run the contrastive_ce.ipynb python notebook.
+Run the ```contrastive_ce.ipynb``` python notebook.
 
 ### Emotion Representations
 
-1. Emotion Dataset extraction - Run Emotion/extract_mm_emotion.ipynb
+1. Emotion Dataset extraction - Run ```Emotion/extract_mm_emotion.ipynb```
 
-2. Emotion Level Pre-Training and Emotion Representations - Run Emotion/finetune_rf.ipynb
+2. Emotion Level Pre-Training and Emotion Representations - Run ```Emotion/finetune_rf.ipynb```
 
 ### Proposed Model
 
-Run the nv_em_ce.ipynb python notebook. 
+Run the ```nv_em_ce.ipynb``` python notebook.
