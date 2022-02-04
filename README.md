@@ -49,9 +49,15 @@ python vb_target.py
 
 Run the ```baselines.ipynb``` python notebook.
 
-### SAFE Model
+### SOTA Comparisons
 
-We use [SAFE](https://github.com/Jindi0/SAFE) as one of our baselines. The code for running on our data is present in the Comparison_SOTA folder.
+1. SAFE
+
+We use [SAFE](https://github.com/Jindi0/SAFE) as one of our baselines. The code for running on our data is present in the Comparison_SOTA/SAFE folder.
+
+2. EANN
+
+We use [EANN](https://github.com/yaqingwang/EANN-KDD18) as another baseline. The code for running EANN on our data is present in Comparison_SOTA/EANN.
 
 
 ### Contrastive Learning based Novelty Model
