@@ -14,7 +14,7 @@ Sub-directories-
 
 Each Source File contains attributes such as ID, number of Sources, Source url, Source Text, Source Image url and Source Reliability.
 
-Each Target File contains attributs such as ID, Target url, Target Text, Target Image url and Label
+Each Target File contains attributes such as ID, Target url, Target Text, Target Image url and Label
 
 Note:
 
@@ -22,9 +22,7 @@ Reuters.csv and Snopes.csv are two subfiles from fauxtography Dataset
 
 Images can be downloaded by using image_url, which is provided in .csv files.
 
-ReCovery.csv file in source folder is uploaded in two subparts (ReCovery_1.csv and ReCovery_2.csv)
-
-TICNN.csv file in source folder is uploaded in seven subparts (TICNN_1.csv, TICNN_2.csv and so on).
+TICNN.csv file in source folder is uploaded in two subparts due to GitHub file size uploading constraints (TICNN_1.csv, TICNN_2.csv).
 
 ## Evaluation
 
