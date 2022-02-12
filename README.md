@@ -1,6 +1,6 @@
 # Contrastive_Learning_MM_FND
 
-Contrastive Learning for Multimodal Fake News
+NovEmoFake Multi-Modal Fake News Detection Dataset with Codes and Evaluation
 
 environment.yml - conda environment for setup.
 
