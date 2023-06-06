@@ -1,6 +1,6 @@
 # Contrastive_Learning_MM_FND
 
-NovEmoFake Multi-Modal Fake News Detection Dataset with Codes and Evaluation
+Code for the paper - "Identifying multimodal misinformation leveraging novelty detection and emotion recognition"
 
 ```environment.yml``` - conda environment for setup.
 
@@ -49,14 +49,9 @@ Run the ```baselines.ipynb``` python notebook.
 
 ### SOTA Comparisons
 
-1. SAFE
+1. SAFE: We use [SAFE](https://github.com/Jindi0/SAFE) as one of our baselines. The code for running on our data is present in the Comparison_SOTA/SAFE folder.
 
-We use [SAFE](https://github.com/Jindi0/SAFE) as one of our baselines. The code for running on our data is present in the Comparison_SOTA/SAFE folder.
-
-2. EANN
-
-We use [EANN](https://github.com/yaqingwang/EANN-KDD18) as another baseline. The code for running EANN on our data is present in Comparison_SOTA/EANN.
-
+2. EANN: We use [EANN](https://github.com/yaqingwang/EANN-KDD18) as another baseline. The code for running EANN on our data is present in Comparison_SOTA/EANN.
 
 ### Contrastive Learning based Novelty Model
 
