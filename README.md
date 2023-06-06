@@ -1,6 +1,6 @@
 # Contrastive_Learning_MM_FND
 
-Code for the paper - "Identifying multimodal misinformation leveraging novelty detection and emotion recognition" [LINK](https://link.springer.com/article/10.1007/s10844-023-00789-x)
+Code for the paper - "Identifying multimodal misinformation leveraging novelty detection and emotion recognition" - [LINK](https://link.springer.com/article/10.1007/s10844-023-00789-x)
 
 ```environment.yml``` - conda environment for setup.
 
