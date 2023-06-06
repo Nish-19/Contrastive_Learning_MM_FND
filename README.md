@@ -2,7 +2,7 @@
 
 NovEmoFake Multi-Modal Fake News Detection Dataset with Codes and Evaluation
 
-environment.yml - conda environment for setup.
+```environment.yml``` - conda environment for setup.
 
 # Dataset
 
